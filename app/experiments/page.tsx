@@ -59,37 +59,47 @@ export default function ExperimentsPage() {
         <ul className="grid gap-4 md:grid-cols-2">
           {items.map((exp) => (
             <li key={exp.slug}>
-              <Card className="border border-separator bg-surface/80 shadow-none transition-colors hover:border-accent/40">
-                <Card.Content className="flex flex-col gap-4 p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div>
-                      <NextLink
-                        className="text-lg font-semibold text-foreground no-underline hover:text-accent"
-                        href={`/experiments/${exp.slug}`}
-                      >
-                        {exp.title}
-                      </NextLink>
-                      <p className="mt-1 text-sm text-muted">{exp.subtitle}</p>
-                      <p className="mt-2 font-mono text-xs text-muted">
-                        /experiments/{exp.slug}
-                      </p>
+              <NextLink
+                className="block no-underline"
+                href={`/experiments/${exp.slug}`}
+              >
+                <Card className="h-full cursor-pointer border border-separator bg-surface/80 shadow-none transition-colors hover:border-accent/40">
+                  <Card.Content className="flex flex-col gap-4 p-5">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div>
+                        <p className="text-lg font-semibold text-foreground">
+                          {exp.title}
+                        </p>
+                        <p className="mt-1 text-sm text-muted">
+                          {exp.subtitle}
+                        </p>
+                        <p className="mt-2 font-mono text-xs text-muted">
+                          /experiments/{exp.slug}
+                        </p>
+                      </div>
+                      <Chip className="bg-accent/15 text-accent" size="sm">
+                        {formatPercent(exp.passRate)}
+                      </Chip>
                     </div>
-                    <Chip className="bg-accent/15 text-accent" size="sm">
-                      {formatPercent(exp.passRate)}
-                    </Chip>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <StatCard label="Langs" value={String(exp.languageCount)} />
-                    <StatCard
-                      label="Pass"
-                      value={`${exp.honestPass}`}
-                      hint={`${exp.honestFail} fail`}
-                    />
-                    <StatCard label="System" value={String(exp.systemFails)} />
-                    <StatCard label="Agent" value={String(exp.agentFails)} />
-                  </div>
-                </Card.Content>
-              </Card>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                      <StatCard
+                        label="Langs"
+                        value={String(exp.languageCount)}
+                      />
+                      <StatCard
+                        label="Pass"
+                        value={`${exp.honestPass}`}
+                        hint={`${exp.honestFail} fail`}
+                      />
+                      <StatCard
+                        label="System"
+                        value={String(exp.systemFails)}
+                      />
+                      <StatCard label="Agent" value={String(exp.agentFails)} />
+                    </div>
+                  </Card.Content>
+                </Card>
+              </NextLink>
             </li>
           ))}
         </ul>
