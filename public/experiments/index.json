@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "efe-v3-harness",
+    "title": "EFE v3 harness",
+    "subtitle": "11-lang overnight \u00b7 annotated failures",
+    "updatedAt": "2026-11-12T17:51:24.249794+00:00",
+    "languageCount": 11,
+    "passRate": 85.7,
+    "honestPass": 245,
+    "honestFail": 41,
+    "systemFails": 23,
+    "agentFails": 18
+  }
+]

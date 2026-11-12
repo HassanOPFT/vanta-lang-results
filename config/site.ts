@@ -6,5 +6,6 @@ export const siteConfig = {
   navItems: [
     { label: "Overview", href: "/" },
     { label: "Compare", href: "/compare" },
+    { label: "Experiments", href: "/experiments" },
   ],
 };

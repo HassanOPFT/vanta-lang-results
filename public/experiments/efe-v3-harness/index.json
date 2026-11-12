@@ -1,0 +1,504 @@
+{
+  "slug": "efe-v3-harness",
+  "title": "EFE v3 harness",
+  "subtitle": "11-language overnight suite on the EFE / v3 harness worktree",
+  "experiment": "efe",
+  "harness": "v3",
+  "updatedAt": "2026-11-12T17:51:24.249794+00:00",
+  "source": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-lang-pipeline\\state\\fa_plus_11_overnight\\overnight_status.json",
+  "worktreeHint": "EFE v3 harness overnight (suite pointer: state/fa_plus_11_overnight)",
+  "languageCount": 11,
+  "totalCases": 286,
+  "honestPass": 245,
+  "honestFail": 41,
+  "passRate": 85.7,
+  "systemFails": 23,
+  "agentFails": 18,
+  "unknownFails": 0,
+  "languages": [
+    {
+      "code": "tw",
+      "condition": "twi",
+      "display": "Twi",
+      "cases": 26,
+      "honestPass": 20,
+      "honestFail": 6,
+      "passRate": 76.9,
+      "meanWallPass": 71.35,
+      "meanTurns": 21.23,
+      "totalInputTokens": 50850091,
+      "totalOutputTokens": 38243,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447"
+    },
+    {
+      "code": "sn",
+      "condition": "shona",
+      "display": "Shona",
+      "cases": 26,
+      "honestPass": 22,
+      "honestFail": 4,
+      "passRate": 84.6,
+      "meanWallPass": 71.34,
+      "meanTurns": 21.62,
+      "totalInputTokens": 53139389,
+      "totalOutputTokens": 36847,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sn-20261112-065307"
+    },
+    {
+      "code": "sv",
+      "condition": "swedish",
+      "display": "Swedish",
+      "cases": 26,
+      "honestPass": 24,
+      "honestFail": 2,
+      "passRate": 92.3,
+      "meanWallPass": 83.21,
+      "meanTurns": 22.77,
+      "totalInputTokens": 60208619,
+      "totalOutputTokens": 35824,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sv-20261112-072808"
+    },
+    {
+      "code": "xh",
+      "condition": "xhosa",
+      "display": "Xhosa",
+      "cases": 26,
+      "honestPass": 23,
+      "honestFail": 3,
+      "passRate": 88.5,
+      "meanWallPass": 87.78,
+      "meanTurns": 23.12,
+      "totalInputTokens": 60344972,
+      "totalOutputTokens": 38751,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\xh-20261112-080909"
+    },
+    {
+      "code": "am",
+      "condition": "amharic",
+      "display": "Amharic",
+      "cases": 26,
+      "honestPass": 23,
+      "honestFail": 3,
+      "passRate": 88.5,
+      "meanWallPass": 86.55,
+      "meanTurns": 23.19,
+      "totalInputTokens": 63626171,
+      "totalOutputTokens": 45941,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\am-20261112-085109"
+    },
+    {
+      "code": "om",
+      "condition": "oromo",
+      "display": "Oromo",
+      "cases": 26,
+      "honestPass": 21,
+      "honestFail": 5,
+      "passRate": 80.8,
+      "meanWallPass": 88.96,
+      "meanTurns": 23.54,
+      "totalInputTokens": 62536688,
+      "totalOutputTokens": 41537,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\om-20261112-093310"
+    },
+    {
+      "code": "pl",
+      "condition": "polish",
+      "display": "Polish",
+      "cases": 26,
+      "honestPass": 22,
+      "honestFail": 4,
+      "passRate": 84.6,
+      "meanWallPass": 79.8,
+      "meanTurns": 22.38,
+      "totalInputTokens": 59628448,
+      "totalOutputTokens": 35538,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\pl-20261112-101511"
+    },
+    {
+      "code": "ru",
+      "condition": "russian",
+      "display": "Russian",
+      "cases": 26,
+      "honestPass": 21,
+      "honestFail": 5,
+      "passRate": 80.8,
+      "meanWallPass": 79.57,
+      "meanTurns": 22.77,
+      "totalInputTokens": 59354777,
+      "totalOutputTokens": 36725,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\ru-20261112-105314"
+    },
+    {
+      "code": "so",
+      "condition": "somali",
+      "display": "Somali",
+      "cases": 26,
+      "honestPass": 23,
+      "honestFail": 3,
+      "passRate": 88.5,
+      "meanWallPass": 92.37,
+      "meanTurns": 23.35,
+      "totalInputTokens": 63288796,
+      "totalOutputTokens": 39732,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\so-20261112-113314"
+    },
+    {
+      "code": "yo",
+      "condition": "yoruba",
+      "display": "Yoruba",
+      "cases": 26,
+      "honestPass": 22,
+      "honestFail": 4,
+      "passRate": 84.6,
+      "meanWallPass": 86.48,
+      "meanTurns": 23.19,
+      "totalInputTokens": 62410646,
+      "totalOutputTokens": 40632,
+      "issueCount": 3,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\yo-20261112-121615"
+    },
+    {
+      "code": "en",
+      "condition": "english",
+      "display": "English",
+      "cases": 26,
+      "honestPass": 24,
+      "honestFail": 2,
+      "passRate": 92.3,
+      "meanWallPass": 95.65,
+      "meanTurns": 23.58,
+      "totalInputTokens": 72928852,
+      "totalOutputTokens": 33352,
+      "issueCount": 2,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\en-20261112-131116"
+    }
+  ],
+  "clusters": [
+    {
+      "caseId": "case_19_course_withdrawal",
+      "failCount": 11,
+      "langs": [
+        "amharic",
+        "english",
+        "oromo",
+        "polish",
+        "russian",
+        "shona",
+        "somali",
+        "swedish",
+        "twi",
+        "xhosa",
+        "yoruba"
+      ],
+      "dominantRootCause": "language_dataclass_mismatch",
+      "failureClass": "system",
+      "failureSummary": "System / harness \u2014 case_19_course_withdrawal never started: CourseWithdrawalLanguage rejects kwarg 'sent_label' (raised while importing languages/__init__.py). Pack field schema drifted from the dataclass used by this worktree.",
+      "proposedFix": "Align CourseWithdrawalLanguage fields with language packs (add 'sent_label' or strip it from every languages/*.py). Re-run case_19/case_20 after the dataclass matches. Note: one bad pack file can poison load_scenarios for the whole case.",
+      "shouldFixSystem": "yes",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_19_course_withdrawal\\twi_openai_direct_fail_1794465849.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "shona",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sn-20261112-065307\\case_19_course_withdrawal\\shona_openai_direct_fail_1794467946.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "swedish",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sv-20261112-072808\\case_19_course_withdrawal\\swedish_openai_direct_fail_1794470348.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "xhosa",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\xh-20261112-080909\\case_19_course_withdrawal\\xhosa_openai_direct_fail_1794472902.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "amharic",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\am-20261112-085109\\case_19_course_withdrawal\\amharic_openai_direct_fail_1794475258.json",
+          "rootCause": "language_dataclass_mismatch"
+        }
+      ]
+    },
+    {
+      "caseId": "case_20_academic_integrity",
+      "failCount": 11,
+      "langs": [
+        "amharic",
+        "english",
+        "oromo",
+        "polish",
+        "russian",
+        "shona",
+        "somali",
+        "swedish",
+        "twi",
+        "xhosa",
+        "yoruba"
+      ],
+      "dominantRootCause": "language_dataclass_mismatch",
+      "failureClass": "system",
+      "failureSummary": "System / harness \u2014 case_20_academic_integrity never started: AcademicIntegrityLanguage rejects kwarg 'context_label' (raised while importing languages/__init__.py). Pack field schema drifted from the dataclass used by this worktree.",
+      "proposedFix": "Align AcademicIntegrityLanguage fields with language packs (add 'context_label' or strip it from every languages/*.py). Re-run case_19/case_20 after the dataclass matches. Note: one bad pack file can poison load_scenarios for the whole case.",
+      "shouldFixSystem": "yes",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_20_academic_integrity\\twi_openai_direct_fail_1794465849.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "shona",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sn-20261112-065307\\case_20_academic_integrity\\shona_openai_direct_fail_1794467946.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "swedish",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sv-20261112-072808\\case_20_academic_integrity\\swedish_openai_direct_fail_1794470348.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "xhosa",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\xh-20261112-080909\\case_20_academic_integrity\\xhosa_openai_direct_fail_1794472902.json",
+          "rootCause": "language_dataclass_mismatch"
+        },
+        {
+          "condition": "amharic",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\am-20261112-085109\\case_20_academic_integrity\\amharic_openai_direct_fail_1794475258.json",
+          "rootCause": "language_dataclass_mismatch"
+        }
+      ]
+    },
+    {
+      "caseId": "case_06_create_course",
+      "failCount": 6,
+      "langs": [
+        "amharic",
+        "oromo",
+        "polish",
+        "shona",
+        "somali",
+        "xhosa"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: course created (vanta_c06_cs301_sn exists but categoryid=2 (expected 48 'Fakoro reVANTA reZvidzidzo zveKomputa')).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "shona",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sn-20261112-065307\\case_06_create_course\\shona_openai_direct_1794466668_a3be8c2f34df4129abf07897aa07cd94.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "xhosa",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\xh-20261112-080909\\case_06_create_course\\xhosa_openai_direct_1794471292_252de6e8928f464a999d8152e71f0980.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "amharic",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\am-20261112-085109\\case_06_create_course\\amharic_openai_direct_1794473827_f30f8a51c4fe46138c89c11023b81346.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "oromo",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\om-20261112-093310\\case_06_create_course\\oromo_openai_direct_1794476329_2f86e7dc93c240d1a5db319e0a92dbe4.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "polish",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\pl-20261112-101511\\case_06_create_course\\polish_openai_direct_1794478841_6a5e2155d9ba4077a74d2e764d213c02.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_10_create_book",
+      "failCount": 5,
+      "langs": [
+        "oromo",
+        "polish",
+        "russian",
+        "shona",
+        "twi"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: chapter 1 present (chapter 'Nea enti a nhyehy\u025be ho hia' missing or empty); chapter 2 present (chapter 'Fa toto ho na sesa' missing or empty); chapter 3 present (chapter 'Bere a nea eye no d\u0254\u0254so' missing or empty).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_10_create_book\\twi_openai_direct_1794464212_6a6ca71f911f4d289a240c6fd18e0295.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "shona",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\sn-20261112-065307\\case_10_create_book\\shona_openai_direct_1794467103_379bd28bfb194f82aba24ac302261232.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "oromo",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\om-20261112-093310\\case_10_create_book\\oromo_openai_direct_1794476865_2d6eb8d4590747dfb86845d6b21f27bc.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "polish",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\pl-20261112-101511\\case_10_create_book\\polish_openai_direct_1794479288_4f9e7968e9424b219a54054303ff04ef.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "russian",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\ru-20261112-105314\\case_10_create_book\\russian_openai_direct_1794481602_aff853a7ec3c44058a2b75205df509b6.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_14_monitoring_tasks",
+      "failCount": 2,
+      "langs": [
+        "twi",
+        "yoruba"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: missing submission reported (expected 'Raili Ch\u025bn' missing submission for 'Lab adwuma dap\u025bn 2').",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_14_monitoring_tasks\\twi_openai_direct_1794464648_d27e5779551e4180b7b2534c85c0b852.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "yoruba",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\yo-20261112-121615\\case_14_monitoring_tasks\\yoruba_openai_direct_1794487868_4d39e83db256488ca31cdea302cffb37.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_17_late_enrollment",
+      "failCount": 2,
+      "langs": [
+        "russian",
+        "twi"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: enrol dana student enrolled (vanta_c17_dana_tw role=student).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_17_late_enrollment\\twi_openai_direct_1794465667_0624668beb334f2bb4ac057266816bf5.json",
+          "rootCause": "agent_incomplete"
+        },
+        {
+          "condition": "russian",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\ru-20261112-105314\\case_17_late_enrollment\\russian_openai_direct_1794482457_2d2561a5d5524b16b50de104792604d7.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_04_reset_password",
+      "failCount": 1,
+      "langs": [
+        "yoruba"
+      ],
+      "dominantRootCause": "api_infra",
+      "failureClass": "system",
+      "failureSummary": "System / API \u2014 infra killed the run (timeout Wall-clock limit: 900.0s). Verifier also saw: agent run completed (agent aborted (shutdown/execution_error/empty run); leftover verify state ignored: Wall-clock limit:).",
+      "proposedFix": "Re-run this case once API/quota is healthy; do not blame the lang pack.",
+      "shouldFixSystem": "yes",
+      "examples": [
+        {
+          "condition": "yoruba",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\yo-20261112-121615\\case_04_reset_password\\yoruba_openai_direct_1794485975_b86e48baf7be43f1b632a4541a43ffc8.json",
+          "rootCause": "api_infra"
+        }
+      ]
+    },
+    {
+      "caseId": "case_07_create_assignment",
+      "failCount": 1,
+      "langs": [
+        "oromo"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: assignment created (Hojii manaa 1 - Qindeessuu exists but intro='<p>Algoritmota qindeessuu barumsa keessatti irratti mar).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "oromo",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\om-20261112-093310\\case_07_create_assignment\\oromo_openai_direct_1794476392_d86bad06d69a434a964b61445b516b71.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_08_grade_pdf_submissions",
+      "failCount": 1,
+      "langs": [
+        "russian"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: students graded (\u0414\u043e\u043c\u0430\u0448\u043d\u0435\u0435 \u0437\u0430\u0434\u0430\u043d\u0438\u0435 1 \u2014 \u0420\u0435\u043a\u0443\u0440\u0441\u0438\u044f id=818 vanta_c08_alice_ru: grade=7.0 (expected 10); vanta_c08_bob_ru: ).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "russian",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\ru-20261112-105314\\case_08_grade_pdf_submissions\\russian_openai_direct_1794481312_f93b81cb06eb4445aa39d398dad9f076.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    },
+    {
+      "caseId": "case_12_workshop_setup",
+      "failCount": 1,
+      "langs": [
+        "twi"
+      ],
+      "dominantRootCause": "agent_incomplete",
+      "failureClass": "agent",
+      "failureSummary": "Agent \u2014 run finished but task incomplete. Missed: grading strategy (strategy='comments' (expected 'accumulative')).",
+      "proposedFix": "No harness fix required for merge. Optional: re-run or tighten prompt.",
+      "shouldFixSystem": "no",
+      "examples": [
+        {
+          "condition": "twi",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\vanta-benchmark-runs\\tw-20261112-060447\\case_12_workshop_setup\\twi_openai_direct_1794464381_40c75e8dde394df59d0bf196806ac031.json",
+          "rootCause": "agent_incomplete"
+        }
+      ]
+    }
+  ],
+  "headlineFindings": [
+    "System / harness \u2014 case_19_course_withdrawal never started: CourseWithdrawalLanguage rejects kwarg 'sent_label' (raised while importing languages/__init__.py). Pack field schema drifted from the dataclass used by this worktree.",
+    "System / harness \u2014 case_20_academic_integrity never started: AcademicIntegrityLanguage rejects kwarg 'context_label' (raised while importing languages/__init__.py). Pack field schema drifted from the dataclass used by this worktree.",
+    "Agent \u2014 run finished but task incomplete. Missed: course created (vanta_c06_cs301_sn exists but categoryid=2 (expected 48 'Fakoro reVANTA reZvidzidzo zveKomputa')).",
+    "Agent \u2014 run finished but task incomplete. Missed: chapter 1 present (chapter 'Nea enti a nhyehy\u025be ho hia' missing or empty); chapter 2 present (chapter 'Fa toto ho na sesa' missing or empty); chapter 3 present (chapter 'Bere a nea eye no d\u0254\u0254so' missing or empty)."
+  ]
+}
