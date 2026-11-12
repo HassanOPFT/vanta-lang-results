@@ -1,3 +1,5 @@
+import type { CaseRow, LanguageDetail, LanguageSummary } from "@/lib/types";
+
 export type ExperimentSummary = {
   slug: string;
   title: string;
@@ -89,11 +91,13 @@ export type ExperimentLangDetail = ExperimentLangSummary & {
     caseId: string;
     conditionId: string;
     success: boolean;
+    rawSuccess?: boolean;
     turns: number;
     wallClockSeconds: number;
     hasWallClockSeconds: boolean;
     inputTokens: number;
     outputTokens: number;
+    validationIssues?: string;
     failureClass?: string;
     failureSummary?: string;
     shouldFixSystem?: string;
@@ -102,6 +106,58 @@ export type ExperimentLangDetail = ExperimentLangSummary & {
     backend?: string;
   }>;
 };
+
+export function toLanguageDetail(lang: ExperimentLangDetail): LanguageDetail {
+  const rows: CaseRow[] = lang.rows.map((r) => ({
+    caseId: r.caseId,
+    conditionId: r.conditionId,
+    success: r.success,
+    rawSuccess: r.rawSuccess ?? r.success,
+    turns: r.turns,
+    wallClockSeconds: r.wallClockSeconds,
+    hasWallClockSeconds: r.hasWallClockSeconds,
+    inputTokens: r.inputTokens,
+    outputTokens: r.outputTokens,
+    validationIssues: r.validationIssues || "",
+    failureClass: r.failureClass,
+    failureSummary: r.failureSummary,
+    shouldFixSystem: r.shouldFixSystem,
+    proposedFix: r.proposedFix,
+    backend: r.backend,
+  }));
+  return {
+    condition: lang.condition,
+    display: lang.display,
+    cases: lang.cases,
+    honestPass: lang.honestPass,
+    honestFail: lang.honestFail,
+    passRate: lang.passRate,
+    meanWallPass: lang.meanWallPass,
+    meanTurns: lang.meanTurns,
+    totalInputTokens: lang.totalInputTokens,
+    totalOutputTokens: lang.totalOutputTokens,
+    issueCount: lang.issueCount,
+    rows,
+  };
+}
+
+export function toLanguageSummaries(
+  languages: ExperimentLangSummary[],
+): LanguageSummary[] {
+  return languages.map((l) => ({
+    condition: l.condition,
+    display: l.display,
+    cases: l.cases,
+    honestPass: l.honestPass,
+    honestFail: l.honestFail,
+    passRate: l.passRate,
+    meanWallPass: l.meanWallPass,
+    meanTurns: l.meanTurns,
+    totalInputTokens: l.totalInputTokens,
+    totalOutputTokens: l.totalOutputTokens,
+    issueCount: l.issueCount,
+  }));
+}
 
 export async function loadExperimentRegistry(): Promise<ExperimentSummary[]> {
   const res = await fetch("/experiments/index.json", { cache: "no-store" });
@@ -130,4 +186,11 @@ export async function loadExperimentLang(
   });
   if (!res.ok) throw new Error(`experiment lang ${condition} HTTP ${res.status}`);
   return res.json();
+}
+
+export async function loadExperimentLanguages(
+  slug: string,
+  conditions: string[],
+): Promise<ExperimentLangDetail[]> {
+  return Promise.all(conditions.map((c) => loadExperimentLang(slug, c)));
 }
