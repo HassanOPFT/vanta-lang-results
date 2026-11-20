@@ -198,14 +198,19 @@ export function toLanguageSummaries(
   }));
 }
 
+/** Static JSON lives under /data/experiments so it does not shadow App Router routes. */
+const EXPERIMENTS_DATA = "/data/experiments";
+
 export async function loadExperimentRegistry(): Promise<ExperimentSummary[]> {
-  const res = await fetch("/experiments/index.json", { cache: "no-store" });
+  const res = await fetch(`${EXPERIMENTS_DATA}/index.json`, {
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error(`experiments registry HTTP ${res.status}`);
   return res.json();
 }
 
 export async function loadExperiment(slug: string): Promise<ExperimentIndex> {
-  const res = await fetch(`/experiments/${slug}/index.json`, {
+  const res = await fetch(`${EXPERIMENTS_DATA}/${slug}/index.json`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`experiment ${slug} HTTP ${res.status}`);
@@ -215,7 +220,7 @@ export async function loadExperiment(slug: string): Promise<ExperimentIndex> {
 export async function loadExperimentFails(
   slug: string,
 ): Promise<ExperimentFail[]> {
-  const res = await fetch(`/experiments/${slug}/fails.json`, {
+  const res = await fetch(`${EXPERIMENTS_DATA}/${slug}/fails.json`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`experiment fails ${slug} HTTP ${res.status}`);
@@ -226,7 +231,7 @@ export async function loadExperimentLang(
   slug: string,
   condition: string,
 ): Promise<ExperimentLangDetail> {
-  const res = await fetch(`/experiments/${slug}/${condition}.json`, {
+  const res = await fetch(`${EXPERIMENTS_DATA}/${slug}/${condition}.json`, {
     cache: "no-store",
   });
   if (!res.ok)

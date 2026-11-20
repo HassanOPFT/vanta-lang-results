@@ -12,8 +12,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = path.resolve(__dirname, "..");
 const VANTA_ROOT = path.resolve(APP_ROOT, "..", "VANTA");
 const VANTA_RESULTS = path.join(VANTA_ROOT, "results");
-const OUT = path.join(APP_ROOT, "public", "experiments", "moodle-ws-api");
-const REGISTRY = path.join(APP_ROOT, "public", "experiments", "index.json");
+const OUT = path.join(APP_ROOT, "public", "data", "experiments", "moodle-ws-api");
+const REGISTRY = path.join(APP_ROOT, "public", "data", "experiments", "index.json");
 
 /** Live tool list from VANTA harness.moodle_ws.registry. */
 function loadTools() {
