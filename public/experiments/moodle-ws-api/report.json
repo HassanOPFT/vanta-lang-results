@@ -1,0 +1,27 @@
+{
+  "title": "Moodle WS API track",
+  "blurb": "Same 26 cases, no browser — agent uses stock Moodle wsfunctions (+ file mocks). Verifiers unchanged.",
+  "layers": [],
+  "flows": [
+    {
+      "id": "high",
+      "title": "Experiment loop",
+      "mermaid": "flowchart LR\n  A[Case seed in Moodle] --> B[Prompt: english_api / arabic_api]\n  B --> C[Agent + Moodle WS tools]\n  C --> E[Independent verify]\n  E --> F{PASS / FAIL}\n  F -->|stock gap| G[STOCK_GAP system fail]\n  F -->|agent error| H[Agent fail]"
+    }
+  ],
+  "resultsHeadline": [],
+  "toolCount": {
+    "total": 55,
+    "session": 3,
+    "moodleWs": 52
+  },
+  "stockGapCases": [
+    "case_07_create_assignment",
+    "case_09_create_course_section",
+    "case_10_create_book",
+    "case_11_course_audit_repair",
+    "case_12_workshop_setup",
+    "case_13_groups_restricted_release",
+    "case_16_extra_quiz_attempt"
+  ]
+}

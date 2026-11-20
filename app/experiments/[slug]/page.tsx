@@ -10,6 +10,9 @@ import { ChartToggles } from "@/components/chart-toggles";
 import { CaseDifficultyBars } from "@/components/charts/case-difficulty-bars";
 import { CompareWallBars } from "@/components/charts/compare-wall-bars";
 import { PassRateBars } from "@/components/charts/pass-rate-bars";
+import { CollapsibleSection } from "@/components/collapsible-section";
+import { ExperimentCaseCompareTable } from "@/components/experiment-case-compare-table";
+import { ExperimentReportView } from "@/components/experiment-report";
 import { HardCasesList } from "@/components/hard-cases-list";
 import { InsightList } from "@/components/insight-list";
 import { StatCard } from "@/components/stat-card";
@@ -140,7 +143,9 @@ export default function ExperimentDetailPage() {
             <h1 className="text-3xl font-semibold tracking-tight text-foreground">
               {index.title}
             </h1>
-            <p className="mt-1 max-w-2xl text-sm text-muted">{index.subtitle}</p>
+            <p className="mt-1 max-w-2xl text-sm text-muted">
+              {index.subtitle}
+            </p>
             <p className="mt-2 text-xs text-muted">
               Updated {new Date(index.updatedAt).toLocaleString()}
               {index.worktreeHint ? ` · ${index.worktreeHint}` : ""}
@@ -152,7 +157,7 @@ export default function ExperimentDetailPage() {
         </div>
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         <StatCard
           label="Languages"
           value={String(index.languageCount)}
@@ -181,9 +186,21 @@ export default function ExperimentDetailPage() {
           value={String(index.agentFails)}
           hint="task incomplete"
         />
+        {index.toolCount != null && index.tools?.length ? (
+          <StatCard
+            label="Tools"
+            value={String(index.toolCount)}
+            hint={`${index.tools.filter((t) => t.kind === "moodle").length} Moodle WS`}
+            href="#tools"
+          />
+        ) : null}
       </section>
 
-      <InsightList findings={findings} title="What this experiment says" />
+      {index.report ? <ExperimentReportView report={index.report} /> : null}
+
+      {!index.report ? (
+        <InsightList findings={findings} title="What this experiment says" />
+      ) : null}
 
       <ChartToggles
         options={OVERVIEW_CHARTS}
@@ -291,18 +308,46 @@ export default function ExperimentDetailPage() {
         </div>
       </section>
 
+      {index.tools?.length ? (
+        <CollapsibleSection
+          id="tools"
+          title={`Tools (${index.tools.length})`}
+          description={`${index.tools.filter((t) => t.kind === "session").length} session helpers · ${index.tools.filter((t) => t.kind === "moodle").length} stock Moodle wsfunctions`}
+        >
+          <ul className="divide-y divide-separator/60 rounded-md border border-separator">
+            {index.tools.map((tool) => (
+              <li
+                key={tool.name}
+                className="flex flex-col gap-1 px-3 py-2.5 sm:flex-row sm:items-baseline sm:gap-4"
+              >
+                <div className="flex min-w-0 shrink-0 items-center gap-2 sm:w-72">
+                  <span className="font-mono text-xs font-medium text-foreground">
+                    {tool.name}
+                  </span>
+                  <Chip
+                    size="sm"
+                    className={
+                      tool.kind === "session"
+                        ? "bg-accent/15 text-accent"
+                        : "bg-default-100 text-muted"
+                    }
+                  >
+                    {tool.kind === "session" ? "session" : "ws"}
+                  </Chip>
+                </div>
+                <p className="min-w-0 text-sm text-muted">{tool.description}</p>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+      ) : null}
+
       <FailureClusters clusters={index.clusters} />
 
-      <section className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-semibold text-foreground">
-              All failures ({visibleFails.length})
-            </h2>
-            <p className="text-sm text-muted">
-              Annotated system vs agent notes shipped with this experiment.
-            </p>
-          </div>
+      <CollapsibleSection
+        title={`All failures (${visibleFails.length})`}
+        description="Annotated system vs agent notes shipped with this experiment."
+        actions={
           <div className="flex gap-1">
             {(["all", "system", "agent"] as const).map((f) => (
               <button
@@ -319,7 +364,8 @@ export default function ExperimentDetailPage() {
               </button>
             ))}
           </div>
-        </div>
+        }
+      >
         <div className="flex flex-col gap-2">
           {visibleFails.map((f) => (
             <Card
@@ -357,7 +403,11 @@ export default function ExperimentDetailPage() {
             </Card>
           ))}
         </div>
-      </section>
+      </CollapsibleSection>
+
+      {!loadingDetails && details.length > 0 ? (
+        <ExperimentCaseCompareTable languages={details} />
+      ) : null}
     </div>
   );
 }
@@ -365,15 +415,10 @@ export default function ExperimentDetailPage() {
 function FailureClusters({ clusters }: { clusters: ExperimentCluster[] }) {
   if (!clusters.length) return null;
   return (
-    <section className="flex flex-col gap-3">
-      <div>
-        <h2 className="text-lg font-semibold text-foreground">
-          Failure clusters
-        </h2>
-        <p className="text-sm text-muted">
-          Grouped by case across languages — debug notes for harness fixes.
-        </p>
-      </div>
+    <CollapsibleSection
+      title={`Failure clusters (${clusters.length})`}
+      description="Grouped by case across languages — debug notes for harness fixes."
+    >
       <div className="flex flex-col gap-3">
         {clusters.map((c) => (
           <Card
@@ -400,11 +445,13 @@ function FailureClusters({ clusters }: { clusters: ExperimentCluster[] }) {
                 <span className="font-medium text-foreground">Fix: </span>
                 {c.proposedFix}
               </p>
-              <p className="text-xs text-muted">Affects: {c.langs.join(", ")}</p>
+              <p className="text-xs text-muted">
+                Affects: {c.langs.join(", ")}
+              </p>
             </Card.Content>
           </Card>
         ))}
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }

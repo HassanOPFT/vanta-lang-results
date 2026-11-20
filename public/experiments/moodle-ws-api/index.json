@@ -1,0 +1,533 @@
+{
+  "slug": "moodle-ws-api",
+  "title": "Moodle WS API track",
+  "subtitle": "EN+AR · stock wsfunctions · no browser",
+  "experiment": "moodle-ws-api",
+  "harness": "moodle_ws_tools_v1",
+  "updatedAt": "2026-11-20T10:00:38.010Z",
+  "source": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results",
+  "worktreeHint": "VANTA feature/moodle-ws-tools · openai_direct_api",
+  "languageCount": 2,
+  "totalCases": 52,
+  "honestPass": 38,
+  "honestFail": 14,
+  "passRate": 73.1,
+  "systemFails": 14,
+  "agentFails": 0,
+  "unknownFails": 0,
+  "tools": [
+    {
+      "name": "get_token",
+      "description": "Authenticate to Moodle and store a web-service token for later tool calls. Call this before any core_* / enrol_* / mod_* function. Uses login/token.php with the moodle_mobile_app service by default.",
+      "kind": "session"
+    },
+    {
+      "name": "list_provided_files",
+      "description": "List basenames of task-provided files available via read_provided_file (for example roster.csv or a plaintext brief mock).",
+      "kind": "session"
+    },
+    {
+      "name": "read_provided_file",
+      "description": "Read the UTF-8 text of a task-provided file by basename only (for example roster.csv or assignment_brief.txt). Cannot open arbitrary paths or URLs.",
+      "kind": "session"
+    },
+    {
+      "name": "core_webservice_get_site_info",
+      "description": "Return site info for the current token user, including userid, site name, and the list of web-service functions this token may call.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_auth_request_password_reset",
+      "description": "Trigger Moodle's forgot-password flow for a username or email (stores a reset token when the account exists).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_user_get_users",
+      "description": "Search for users matching criteria (for example key=username, value=alice). Returns matching user records including id.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_user_get_users_by_field",
+      "description": "Retrieve users by a single field (id, idnumber, username, or email) and one or more values. Prefer this when you already know the exact username.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_user_create_users",
+      "description": "Create one or more user accounts. Each user needs at least username, password, firstname, lastname, and email (Moodle create-user shape).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_get_courses_by_field",
+      "description": "Get courses matching one field (id, ids, shortname, idnumber, or category). Use shortname or search by known identifiers when you have them.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_search_courses",
+      "description": "Search courses by a free-text criterion (typically the course full name). Use when you only know the course name, not its id or shortname.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_get_categories",
+      "description": "List course categories (id and name). Use when creating a course in a named category.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_get_contents",
+      "description": "Return course sections and module summaries (names, modname, visibility). Use to inspect or confirm course structure after edits.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_create_courses",
+      "description": "Create one or more course shells. Each course needs shortname, fullname, and categoryid. startdate must be a Unix timestamp for local midnight of the intended start day in the Moodle site timezone (not a date string, not UTC midnight unless the site timezone is UTC).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_update_courses",
+      "description": "Update existing courses by id (fields same shape as create). startdate is a Unix timestamp.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_edit_section",
+      "description": "Performs an action on a course section: hide, show, stealth, setmarker, or removemarker. id is the course section id (not section number). Moodle's stock webservice does not rename sections or set summaries.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_edit_module",
+      "description": "Performs an action on a course module (cmid): hide, show, stealth, duplicate, delete, moveleft, moveright, groupmode actions, etc. Moodle's stock webservice does not rename activities or set availability JSON.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_course_delete_courses",
+      "description": "Permanently delete one or more courses by id.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_courseformat_get_state",
+      "description": "Get the current course editor state JSON for a course id (sections/cms structure used by the course format UI).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_courseformat_update_course",
+      "description": "Update course contents via course-format state actions. action examples from Moodle: section_add, section_delete, section_hide, section_show, cm_hide, cm_show, cm_stealth, cm_delete, cm_duplicate, cm_move, section_move. ids are affected section or cm ids when required; section_add can omit ids to append a new topic section.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_courseformat_create_module",
+      "description": "Add a module via quick-create (modname + targetsectionnum). Only works for modules that declare FEATURE_QUICKCREATE; others raise Moodle errors. Does not set custom activity titles/settings by itself.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_courseformat_new_module",
+      "description": "Create a new module targeting a section id (quick-create path). Same QUICKCREATE limitation as core_courseformat_create_module.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_enrol_get_enrolled_users",
+      "description": "List users enrolled in a course, including roles. Use after enrolment to confirm the target user has the expected role.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_enrol_search_users",
+      "description": "Search users in a course enrolment context (participants-style search). Requires courseid, search text, searchanywhere, page, and perpage.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_group_get_course_groups",
+      "description": "List groups in a course (id, name, description).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_group_get_group_members",
+      "description": "Return user ids in each requested group. Pass groupids[0], groupids[1], …",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_group_create_groups",
+      "description": "Create one or more groups in a course.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_group_add_group_members",
+      "description": "Add users to groups.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_message_send_instant_messages",
+      "description": "Send one or more private instant messages from the authenticated user to other users (touserid + text). Used for denial/escalation private notes.",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_message_get_conversation_between_users",
+      "description": "Find the individual conversation id between two users (for follow-up reads).",
+      "kind": "moodle"
+    },
+    {
+      "name": "core_message_get_conversation_messages",
+      "description": "List messages in a conversation (newest-first pagination).",
+      "kind": "moodle"
+    },
+    {
+      "name": "enrol_manual_enrol_users",
+      "description": "Manually enrol users into courses. Each enrolment needs roleid, userid, and courseid. On a standard Moodle site the Student roleid is usually 5 (confirm via site roles if unsure).",
+      "kind": "moodle"
+    },
+    {
+      "name": "enrol_manual_unenrol_users",
+      "description": "Remove manual enrolments. Each row needs userid and courseid (same shape as enrol_manual_enrol_users without roleid).",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_get_assignments",
+      "description": "Return assignments in one or more courses (nested under each course in the response). Teachers may need includenotenrolledcourses when not enrolled.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_get_submissions",
+      "description": "Return assignment submissions for the given assignment instance ids, including per-user submission status (submitted, draft, etc.).",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_get_submission_status",
+      "description": "Submission status for one user on one assignment (attempt, grading, flags).",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_get_grades",
+      "description": "Return grades for one or more assignment instance ids (nested under each assignment in the response).",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_save_grades",
+      "description": "Save grades for an assignment. Pass assignmentid and a grades array of {userid, grade, attemptnumber?, addattempt?, workflowstate?, applytoall?}.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_save_user_extensions",
+      "description": "Grant per-user extension due dates (Unix timestamps). Parallel userids and dates arrays must have equal length. Does not change the class due date.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_assign_set_user_flags",
+      "description": "Set per-user assignment flags (for example extensionduedate as Unix timestamp, locked, mailed). Use save_user_extensions when possible; flags are a fallback.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_book_get_books_by_courses",
+      "description": "List Book activities in courses. Use with core_course_get_contents to confirm a Book exists after creation.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_forum_get_forums_by_courses",
+      "description": "List forum activities in one or more courses (id, name, type). Use courseids[0], courseids[1], … Moodle array style.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_forum_get_forum_discussions",
+      "description": "List discussions in a forum (ids, names, first post id). Discussion ids are required for fetching or posting replies.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_forum_get_discussion_posts",
+      "description": "Return all posts in a discussion thread (HTML bodies, authors). Use after posting to confirm the teacher reply.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_forum_add_discussion",
+      "description": "Start a new forum discussion (subject + message). Use for announcement-style posts with a new subject line.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_forum_add_discussion_post",
+      "description": "Reply in an existing discussion (parent post id + message). Use to post a teacher summary reply to a student thread.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_label_get_labels_by_courses",
+      "description": "List Text and media area (label) activities in the given courses. Read-only; stock Moodle has no webservice to create or rename labels.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_page_get_pages_by_courses",
+      "description": "List Page activities in the given courses (names, intro, visibility). Read-only.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_get_quizzes_by_courses",
+      "description": "List quizzes in the given courses, including class settings such as attempts allowed and open/close times.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_get_user_attempts",
+      "description": "Return a user's quiz attempts (state, timestart, timefinish) for a quiz instance.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_get_overrides",
+      "description": "List existing per-user / per-group quiz overrides for a quiz instance (attempts, times, password). Read-only discovery before save/delete.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_delete_overrides",
+      "description": "Delete quiz overrides for a quiz. Moodle shape: data.quizid + data.ids (override record ids). Does not delete finished quiz attempts.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_save_overrides",
+      "description": "Create or update per-user or per-group quiz overrides (attempts, timeopen, timeclose, timelimit, password). Wraps Moodle's data.quizid + data.overrides shape.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_get_reopen_attempt_confirmation",
+      "description": "Verify it is OK to re-open a given quiz attempt, and if so return a confirmation message. Moodle documents this for never-submitted attempts.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_quiz_reopen_attempt",
+      "description": "Re-open an attempt that is currently in the never submitted state (Moodle description). Finished attempts may be rejected by Moodle.",
+      "kind": "moodle"
+    },
+    {
+      "name": "mod_workshop_get_workshops_by_courses",
+      "description": "List workshop activities in courses (name, phase, strategy). Confirm creation and phase after edits.",
+      "kind": "moodle"
+    }
+  ],
+  "toolCount": 55,
+  "languages": [
+    {
+      "code": "en",
+      "condition": "english_api",
+      "display": "English API",
+      "cases": 26,
+      "honestPass": 19,
+      "honestFail": 7,
+      "passRate": 73.1,
+      "meanWallPass": 44.30566944574055,
+      "meanTurns": 9.04,
+      "totalInputTokens": 2072791,
+      "totalOutputTokens": 19516,
+      "issueCount": 7,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results"
+    },
+    {
+      "code": "ar",
+      "condition": "arabic_api",
+      "display": "Arabic API",
+      "cases": 26,
+      "honestPass": 19,
+      "honestFail": 7,
+      "passRate": 73.1,
+      "meanWallPass": 44.83626689408955,
+      "meanTurns": 8.85,
+      "totalInputTokens": 1844737,
+      "totalOutputTokens": 20249,
+      "issueCount": 7,
+      "suite": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results"
+    }
+  ],
+  "clusters": [
+    {
+      "caseId": "case_07_create_assignment",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "mod_assign_* is get/grade/submit only; courseformat quick-create cannot set settings.",
+      "failureClass": "system",
+      "failureSummary": "No stock WS to create an assignment with name/intro/due/grade.",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_07_create_assignment\\english_api_openai_direct_api_1795031991_6809735bda0942a0b9c8210addf1ffb4.json",
+          "rootCause": "mod_assign_* is get/grade/submit only; courseformat quick-create cannot set settings."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_07_create_assignment\\arabic_api_openai_direct_api_1795033300_cb70fb3136b34a258acb5480a3198c93.json",
+          "rootCause": "mod_assign_* is get/grade/submit only; courseformat quick-create cannot set settings."
+        }
+      ]
+    },
+    {
+      "caseId": "case_09_create_course_section",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "core_course_edit_section is visibility/marker/delete only; no activity create-with-fields.",
+      "failureClass": "system",
+      "failureSummary": "No stock WS to rename/summarize a section or create named label+assign.",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_09_create_course_section\\english_api_openai_direct_api_1795032168_560e79fef4b2445690e3d7ac0a3397bd.json",
+          "rootCause": "core_course_edit_section is visibility/marker/delete only; no activity create-with-fields."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_09_create_course_section\\arabic_api_openai_direct_api_1795033453_c801938d763a4209a64e2a03c4d5ee12.json",
+          "rootCause": "core_course_edit_section is visibility/marker/delete only; no activity create-with-fields."
+        }
+      ]
+    },
+    {
+      "caseId": "case_10_create_book",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "mod_book exposes get/view only.",
+      "failureClass": "system",
+      "failureSummary": "No stock WS to create a Book or write chapters.",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_10_create_book\\english_api_openai_direct_api_1795032237_83633e3a8fd044bebbb41e450a97f9bd.json",
+          "rootCause": "mod_book exposes get/view only."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_10_create_book\\arabic_api_openai_direct_api_1795033528_d0fe605691d34a6fb301f65d61b53f45.json",
+          "rootCause": "mod_book exposes get/view only."
+        }
+      ]
+    },
+    {
+      "caseId": "case_11_course_audit_repair",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "Same section/label gaps as case 09; edit_module can show a page.",
+      "failureClass": "system",
+      "failureSummary": "Cannot rename section or create a named label via stock WS (unhide is possible).",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_11_course_audit_repair\\english_api_openai_direct_api_1795032285_2eea8dcd657a4a0d8303d7feba4c45fb.json",
+          "rootCause": "Same section/label gaps as case 09; edit_module can show a page."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_11_course_audit_repair\\arabic_api_openai_direct_api_1795033578_281e7cdb93904dcb8d7460355e8b0fa9.json",
+          "rootCause": "Same section/label gaps as case 09; edit_module can show a page."
+        }
+      ]
+    },
+    {
+      "caseId": "case_12_workshop_setup",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "mod_workshop_* is get/submission/assessment only.",
+      "failureClass": "system",
+      "failureSummary": "No stock WS to create a workshop or set strategy/phase.",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_12_workshop_setup\\english_api_openai_direct_api_1795032338_72e57a60633045629e45e15c9d919148.json",
+          "rootCause": "mod_workshop_* is get/submission/assessment only."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_12_workshop_setup\\arabic_api_openai_direct_api_1795033615_753972777ad04071ae779f1dd334bdb6.json",
+          "rootCause": "mod_workshop_* is get/submission/assessment only."
+        }
+      ]
+    },
+    {
+      "caseId": "case_13_groups_restricted_release",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "core_course_edit_module does not accept availability.",
+      "failureClass": "system",
+      "failureSummary": "Groups APIs exist; no stock WS to set activity availability JSON.",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_13_groups_restricted_release\\english_api_openai_direct_api_1795032373_7065ba27cba74302ad34027201d3ea21.json",
+          "rootCause": "core_course_edit_module does not accept availability."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_13_groups_restricted_release\\arabic_api_openai_direct_api_1795033658_9943c812cfa94bbc9ecf9b12c51f6b26.json",
+          "rootCause": "core_course_edit_module does not accept availability."
+        }
+      ]
+    },
+    {
+      "caseId": "case_16_extra_quiz_attempt",
+      "failCount": 2,
+      "langs": [
+        "English API",
+        "Arabic API"
+      ],
+      "dominantRootCause": "Overrides/reopen exist; delete finished attempts is UI/report PHP only.",
+      "failureClass": "system",
+      "failureSummary": "Cannot delete finished quiz attempts via stock WS (reset path).",
+      "proposedFix": "Keep STOCK_GAP on API track; use browser for these cases, or add a local Moodle plugin WS.",
+      "shouldFixSystem": "yes — requires Moodle core/plugin WS, not agent prompt",
+      "examples": [
+        {
+          "condition": "english_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_16_extra_quiz_attempt\\english_api_openai_direct_api_1795032536_21fc3c198e934c5c8678f89da1dfcf0f.json",
+          "rootCause": "Overrides/reopen exist; delete finished attempts is UI/report PHP only."
+        },
+        {
+          "condition": "arabic_api",
+          "record": "C:\\Users\\Hassan Mustafa\\Desktop\\TUM\\VANTA\\results\\case_16_extra_quiz_attempt\\arabic_api_openai_direct_api_1795033852_a9503d5f97614683aa7f72ef13ac0e87.json",
+          "rootCause": "Overrides/reopen exist; delete finished attempts is UI/report PHP only."
+        }
+      ]
+    }
+  ],
+  "headlineFindings": [],
+  "report": {
+    "title": "Moodle WS API track",
+    "blurb": "Same 26 cases, no browser — agent uses stock Moodle wsfunctions (+ file mocks). Verifiers unchanged.",
+    "layers": [],
+    "flows": [
+      {
+        "id": "high",
+        "title": "Experiment loop",
+        "mermaid": "flowchart LR\n  A[Case seed in Moodle] --> B[Prompt: english_api / arabic_api]\n  B --> C[Agent + Moodle WS tools]\n  C --> E[Independent verify]\n  E --> F{PASS / FAIL}\n  F -->|stock gap| G[STOCK_GAP system fail]\n  F -->|agent error| H[Agent fail]"
+      }
+    ],
+    "resultsHeadline": [],
+    "toolCount": {
+      "total": 55,
+      "session": 3,
+      "moodleWs": 52
+    },
+    "stockGapCases": [
+      "case_07_create_assignment",
+      "case_09_create_course_section",
+      "case_10_create_book",
+      "case_11_course_audit_repair",
+      "case_12_workshop_setup",
+      "case_13_groups_restricted_release",
+      "case_16_extra_quiz_attempt"
+    ]
+  }
+}

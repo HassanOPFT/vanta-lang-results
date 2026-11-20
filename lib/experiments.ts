@@ -45,6 +45,40 @@ export type ExperimentLangSummary = {
   suite: string;
 };
 
+export type ExperimentReportLayer = {
+  level: string;
+  title: string;
+  body: string;
+};
+
+export type ExperimentReportFlow = {
+  id: string;
+  title: string;
+  mermaid: string;
+};
+
+export type ExperimentReport = {
+  title: string;
+  blurb: string;
+  audience?: string;
+  layers: ExperimentReportLayer[];
+  flows: ExperimentReportFlow[];
+  resultsHeadline?: string[];
+  toolCount?: {
+    total: number;
+    session: number;
+    moodleWs: number;
+    note?: string;
+  };
+  stockGapCases?: string[];
+};
+
+export type ExperimentTool = {
+  name: string;
+  description: string;
+  kind: "session" | "moodle";
+};
+
 export type ExperimentIndex = {
   slug: string;
   title: string;
@@ -64,6 +98,11 @@ export type ExperimentIndex = {
   clusters: ExperimentCluster[];
   headlineFindings: string[];
   worktreeHint?: string;
+  /** Flat agent tool list (Moodle WS API track). */
+  tools?: ExperimentTool[];
+  toolCount?: number;
+  /** Optional narrative report (API track, etc.). */
+  report?: ExperimentReport;
 };
 
 export type ExperimentFail = {
@@ -166,13 +205,19 @@ export async function loadExperimentRegistry(): Promise<ExperimentSummary[]> {
 }
 
 export async function loadExperiment(slug: string): Promise<ExperimentIndex> {
-  const res = await fetch(`/experiments/${slug}/index.json`, { cache: "no-store" });
+  const res = await fetch(`/experiments/${slug}/index.json`, {
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error(`experiment ${slug} HTTP ${res.status}`);
   return res.json();
 }
 
-export async function loadExperimentFails(slug: string): Promise<ExperimentFail[]> {
-  const res = await fetch(`/experiments/${slug}/fails.json`, { cache: "no-store" });
+export async function loadExperimentFails(
+  slug: string,
+): Promise<ExperimentFail[]> {
+  const res = await fetch(`/experiments/${slug}/fails.json`, {
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error(`experiment fails ${slug} HTTP ${res.status}`);
   return res.json();
 }
@@ -184,7 +229,8 @@ export async function loadExperimentLang(
   const res = await fetch(`/experiments/${slug}/${condition}.json`, {
     cache: "no-store",
   });
-  if (!res.ok) throw new Error(`experiment lang ${condition} HTTP ${res.status}`);
+  if (!res.ok)
+    throw new Error(`experiment lang ${condition} HTTP ${res.status}`);
   return res.json();
 }
 

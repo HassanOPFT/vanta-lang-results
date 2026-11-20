@@ -73,9 +73,6 @@ export default function ExperimentsPage() {
                         <p className="mt-1 text-sm text-muted">
                           {exp.subtitle}
                         </p>
-                        <p className="mt-2 font-mono text-xs text-muted">
-                          /experiments/{exp.slug}
-                        </p>
                       </div>
                       <Chip className="bg-accent/15 text-accent" size="sm">
                         {formatPercent(exp.passRate)}
