@@ -1,9 +1,10 @@
 import { Card } from "@heroui/react";
+import type { ReactNode } from "react";
 
 type StatCardProps = {
   label: string;
   value: string;
-  hint?: string;
+  hint?: ReactNode;
   /** When set, the card is a link (e.g. #tools). */
   href?: string;
 };
@@ -17,7 +18,13 @@ export function StatCard({ label, value, hint, href }: StatCardProps) {
       <p className="text-2xl font-semibold tabular-nums text-foreground">
         {value}
       </p>
-      {hint ? <p className="text-xs text-muted">{hint}</p> : null}
+      {hint ? (
+        typeof hint === "string" ? (
+          <p className="text-xs text-muted">{hint}</p>
+        ) : (
+          <div className="text-xs text-muted">{hint}</div>
+        )
+      ) : null}
     </Card.Content>
   );
 

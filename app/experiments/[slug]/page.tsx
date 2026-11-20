@@ -190,7 +190,18 @@ export default function ExperimentDetailPage() {
           <StatCard
             label="Tools"
             value={String(index.toolCount)}
-            hint={`${index.tools.filter((t) => t.kind === "moodle").length} Moodle WS`}
+            hint={
+              <ul className="mt-0.5 list-disc space-y-0.5 pl-4">
+                <li>
+                  {index.tools.filter((t) => t.kind === "moodle").length} Moodle
+                  WS
+                </li>
+                <li>
+                  {index.tools.filter((t) => t.kind === "session").length}{" "}
+                  helpers (get_token, list_provided_files, read_provided_file)
+                </li>
+              </ul>
+            }
             href="#tools"
           />
         ) : null}
@@ -312,7 +323,7 @@ export default function ExperimentDetailPage() {
         <CollapsibleSection
           id="tools"
           title={`Tools (${index.tools.length})`}
-          description={`${index.tools.filter((t) => t.kind === "session").length} session helpers · ${index.tools.filter((t) => t.kind === "moodle").length} stock Moodle wsfunctions`}
+          description={`${index.tools.filter((t) => t.kind === "session").length} harness helpers (get_token, list_provided_files, read_provided_file) · ${index.tools.filter((t) => t.kind === "moodle").length} stock Moodle wsfunctions`}
         >
           <ul className="divide-y divide-separator/60 rounded-md border border-separator">
             {index.tools.map((tool) => (
@@ -332,7 +343,7 @@ export default function ExperimentDetailPage() {
                         : "bg-default-100 text-muted"
                     }
                   >
-                    {tool.kind === "session" ? "session" : "ws"}
+                    {tool.kind === "session" ? "helper" : "ws"}
                   </Chip>
                 </div>
                 <p className="min-w-0 text-sm text-muted">{tool.description}</p>
