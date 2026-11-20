@@ -34,7 +34,7 @@ export function ExperimentCaseCompareTable({ languages }: Props) {
     for (const lang of languages) {
       for (const row of lang.rows) set.add(row.caseId);
     }
-    return [...set].sort();
+    return Array.from(set).sort();
   }, [languages]);
 
   const flatRows = useMemo(() => {
