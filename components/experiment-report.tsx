@@ -21,17 +21,9 @@ export function ExperimentReportView({ report }: Props) {
 
   return (
     <section className="flex flex-col gap-4">
-      <header className="flex flex-col gap-2">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted">
-          How it works
-        </p>
-        <h2 className="text-xl font-semibold tracking-tight text-foreground">
-          {report.title}
-        </h2>
-        {report.blurb ? (
-          <p className="max-w-3xl text-sm text-muted">{report.blurb}</p>
-        ) : null}
-      </header>
+      {report.blurb ? (
+        <p className="max-w-3xl text-sm text-muted">{report.blurb}</p>
+      ) : null}
 
       {report.resultsHeadline?.length ? (
         <ul className="grid gap-2 sm:grid-cols-2">
@@ -46,44 +38,18 @@ export function ExperimentReportView({ report }: Props) {
         </ul>
       ) : null}
 
-      {report.layers?.length ? (
-        <CollapsibleSection
-          title="Layers (top-down)"
-          description="Progressive stack from policy → verify"
-          defaultOpen
-        >
-          <ol className="grid gap-2 sm:grid-cols-2">
-            {report.layers.map((layer) => (
-              <li
-                key={layer.level}
-                className="rounded-md border border-separator bg-surface/80 p-3"
-              >
-                <p className="text-xs font-medium uppercase tracking-wide text-muted">
-                  L{layer.level} · {layer.title}
-                </p>
-                <p className="mt-1 text-sm text-foreground">{layer.body}</p>
-              </li>
-            ))}
-          </ol>
+      {report.flows?.[0] ? (
+        <CollapsibleSection title="Flow" description="Seed → agent → verify">
+          <MermaidDiagram chart={report.flows[0].mermaid} />
         </CollapsibleSection>
       ) : null}
-
-      {report.flows?.map((flow, idx) => (
-        <CollapsibleSection
-          key={flow.id}
-          title={flow.title}
-          description="Mermaid flow"
-          defaultOpen={idx === 0}
-        >
-          <MermaidDiagram chart={flow.mermaid} />
-        </CollapsibleSection>
-      ))}
 
       {catalog.length ? (
         <CollapsibleSection
           id="case-catalog"
-          title={`Case catalog (${catalog.length})`}
-          description="Rule · setup · how it works · EN/AR A/B · short TLDR"
+          title={`Cases (${catalog.length})`}
+          description="Setup · how · EN/AR (A/B = policy forks)"
+          defaultOpen
         >
           <div className="overflow-x-auto rounded-md border border-separator">
             <table className="min-w-full border-collapse text-left text-sm">

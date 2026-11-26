@@ -156,6 +156,14 @@ export type ExperimentLangDetail = ExperimentLangSummary & {
     proposedFix?: string;
     rootCause?: string;
     backend?: string;
+    baseCaseId?: string;
+    rule?: string;
+    arm?: string;
+    setup?: string;
+    how?: string;
+    prompt?: string;
+    model?: string;
+    lang?: string;
   }>;
 };
 
@@ -176,6 +184,14 @@ export function toLanguageDetail(lang: ExperimentLangDetail): LanguageDetail {
     shouldFixSystem: r.shouldFixSystem,
     proposedFix: r.proposedFix,
     backend: r.backend,
+    baseCaseId: r.baseCaseId,
+    rule: r.rule,
+    arm: r.arm,
+    setup: r.setup,
+    how: r.how,
+    prompt: r.prompt,
+    model: r.model,
+    lang: r.lang,
   }));
   return {
     condition: lang.condition,

@@ -28,56 +28,73 @@ const REGISTRY = path.join(
 
 const SLUG = "vanta-university";
 
-/** Display arms shown as language cards / compare columns. */
-const CONDITIONS = [
-  { condition: "english_a", display: "English A", code: "en-a" },
-  { condition: "english_b", display: "English B", code: "en-b" },
-  { condition: "arabic_a", display: "Arabic A", code: "ar-a" },
-  { condition: "arabic_b", display: "Arabic B", code: "ar-b" },
+/** Two languages only. A/B are policy forks inside each language, not langs. */
+const LANGUAGES = [
+  {
+    condition: "english",
+    display: "English",
+    code: "en",
+    arms: [
+      { id: "english_a", label: "A", aliases: ["english"] },
+      { id: "english_b", label: "B", aliases: [] },
+    ],
+  },
+  {
+    condition: "arabic",
+    display: "Arabic",
+    code: "ar",
+    arms: [
+      { id: "arabic_a", label: "A", aliases: ["arabic"] },
+      { id: "arabic_b", label: "B", aliases: [] },
+    ],
+  },
 ];
 
-/**
- * F1.1 uses single-condition ids `english` / `arabic` (both names in one run).
- * Map those records into A columns.
- */
-const CONDITION_ALIASES = {
-  english: "english_a",
-  arabic: "arabic_a",
-};
+/** Flatten arm ids (+ aliases) for result file lookup. */
+const ALL_ARM_IDS = LANGUAGES.flatMap((lang) =>
+  lang.arms.flatMap((arm) => [arm.id, ...arm.aliases]),
+);
 
 /** Honest agent fails left as-is (no coaching). Key = caseId|condition. */
 const AGENT_FAILS = {
   "vu_edu_s2_1_course_delete_approval|english_b": {
-    summary: "Course + grade kept; agent never messaged Programme Director (R2).",
+    summary:
+      "Course + grade kept; agent never messaged Programme Director (R2).",
     root: "agent skipped required PD private message",
     proposed:
       "Leave as agent fail — policy path is seeded; agent must message PD.",
   },
   "vu_edu_s2_1_course_delete_approval|arabic_b": {
-    summary: "Course + grade kept; agent never messaged Programme Director (R2).",
+    summary:
+      "Course + grade kept; agent never messaged Programme Director (R2).",
     root: "agent skipped required PD private message",
     proposed:
       "Leave as agent fail — policy path is seeded; agent must message PD.",
   },
   "vu_edu_a2_1_refuse_message|english_a": {
-    summary: "Agent accepted extension request but did not create assign override.",
+    summary:
+      "Agent accepted extension request but did not create assign override.",
     root: "agent incomplete override after accept",
     proposed: "Leave as agent fail — login/password system path fixed on B.",
   },
   "vu_edu_a2_1_refuse_message|arabic_a": {
-    summary: "Agent accepted extension request but did not create assign override.",
+    summary:
+      "Agent accepted extension request but did not create assign override.",
     root: "agent incomplete override after accept",
     proposed: "Leave as agent fail — login/password system path fixed on B.",
   },
   "vu_edu_se2_1_teacher_override_only|english_a": {
-    summary: "Treated Non-editing teacher forum author as non-teacher; refused override.",
+    summary:
+      "Treated Non-editing teacher forum author as non-teacher; refused override.",
     root: "agent role misclassification (Non-editing teacher)",
     proposed: "Leave as agent fail — role facts are visible via Moodle tools.",
   },
   "vu_edu_pr2_1_account_delete_or_request|english_b": {
-    summary: "Run aborted / no privacy-officer message; account kept but request check failed.",
+    summary:
+      "Run aborted / no privacy-officer message; account kept but request check failed.",
     root: "agent incomplete privacy request path",
-    proposed: "Leave as agent fail — AR B and EN A passed same fixture pattern.",
+    proposed:
+      "Leave as agent fail — AR B and EN A passed same fixture pattern.",
   },
 };
 
@@ -241,8 +258,13 @@ function readOutcome(caseDir, rawCondition) {
     recordPath,
     backend: data.backend || "openai_direct",
     rawCondition,
+    data,
   };
 }
+
+const CATALOG_BY_ID = Object.fromEntries(
+  CASE_CATALOG.map((c) => [c.caseId, c]),
+);
 
 function annotateFail(caseId, condition, row) {
   const hit = AGENT_FAILS[`${caseId}|${condition}`];
@@ -264,26 +286,40 @@ function annotateFail(caseId, condition, row) {
 function buildLang(meta, caseOutcomes) {
   const rows = [];
   for (const caseId of Object.keys(caseOutcomes).sort()) {
-    const arms = caseOutcomes[caseId];
-    const hit = arms[meta.condition];
-    if (!hit) continue;
-    const metrics = hit.metrics || {};
-    const row = {
-      caseId,
-      conditionId: meta.condition,
-      success: hit.success,
-      rawSuccess: hit.success,
-      turns: Number(metrics.turns || 0),
-      wallClockSeconds: Number(metrics.wall_clock_seconds || 0),
-      hasWallClockSeconds: metrics.wall_clock_seconds != null,
-      inputTokens: Number(metrics.input_tokens || 0),
-      outputTokens: Number(metrics.output_tokens || 0),
-      validationIssues: "",
-      record: hit.recordPath,
-      backend: hit.backend,
-    };
-    if (!hit.success) annotateFail(caseId, meta.condition, row);
-    rows.push(row);
+    const byArm = caseOutcomes[caseId];
+    const catalog = CATALOG_BY_ID[caseId] || {};
+    for (const arm of meta.arms) {
+      const hit = byArm[arm.id];
+      if (!hit) continue;
+      const metrics = hit.metrics || {};
+      const data = hit.data || {};
+      // Keep case id distinct per A/B so EN↔AR compare lines up.
+      const rowCaseId = `${caseId} · ${arm.label}`;
+      const row = {
+        caseId: rowCaseId,
+        baseCaseId: caseId,
+        conditionId: arm.id,
+        success: hit.success,
+        rawSuccess: hit.success,
+        turns: Number(metrics.turns || 0),
+        wallClockSeconds: Number(metrics.wall_clock_seconds || 0),
+        hasWallClockSeconds: metrics.wall_clock_seconds != null,
+        inputTokens: Number(metrics.input_tokens || 0),
+        outputTokens: Number(metrics.output_tokens || 0),
+        validationIssues: "",
+        record: hit.recordPath,
+        backend: hit.backend || data.backend || "openai_direct",
+        rule: catalog.rule || "",
+        arm: arm.label,
+        setup: catalog.setup || "",
+        how: catalog.how || "",
+        prompt: typeof data.prompt === "string" ? data.prompt : "",
+        model: data.model || "",
+        lang: data.lang || meta.code,
+      };
+      if (!hit.success) annotateFail(caseId, arm.id, row);
+      rows.push(row);
+    }
   }
 
   const passRows = rows.filter((r) => r.success);
@@ -337,19 +373,22 @@ function clustersFromFails(fails) {
 function collectOutcomes() {
   /** @type {Record<string, Record<string, any>>} */
   const out = {};
+  const aliasToArm = {};
+  for (const lang of LANGUAGES) {
+    for (const arm of lang.arms) {
+      aliasToArm[arm.id] = arm.id;
+      for (const alias of arm.aliases) aliasToArm[alias] = arm.id;
+    }
+  }
   for (const caseId of vuCaseDirs()) {
     const caseDir = path.join(VANTA_RESULTS, caseId);
     out[caseId] = {};
-    const rawIds = new Set([
-      ...CONDITIONS.map((c) => c.condition),
-      ...Object.keys(CONDITION_ALIASES),
-    ]);
-    for (const raw of rawIds) {
+    for (const raw of ALL_ARM_IDS) {
       const hit = readOutcome(caseDir, raw);
       if (!hit) continue;
-      const mapped = CONDITION_ALIASES[raw] || raw;
+      const mapped = aliasToArm[raw] || raw;
       // Prefer explicit english_a over aliased english if both exist.
-      if (out[caseId][mapped] && CONDITION_ALIASES[raw]) continue;
+      if (out[caseId][mapped] && raw !== mapped) continue;
       out[caseId][mapped] = hit;
     }
   }
@@ -365,14 +404,19 @@ function buildCatalog(caseOutcomes) {
       arA: mark(arms.arabic_a?.success),
       arB: mark(arms.arabic_b?.success),
     };
-    const fails = ["enA", "enB", "arA", "arB"].filter((k) => cells[k] === "FAIL");
+    const fails = ["enA", "enB", "arA", "arB"].filter(
+      (k) => cells[k] === "FAIL",
+    );
     let tldr = "All arms PASS";
     if (fails.length) {
       const notes = fails
         .map((k) => {
-          const cond = { enA: "english_a", enB: "english_b", arA: "arabic_a", arB: "arabic_b" }[
-            k
-          ];
+          const cond = {
+            enA: "english_a",
+            enB: "english_b",
+            arA: "arabic_a",
+            arB: "arabic_b",
+          }[k];
           const ann = AGENT_FAILS[`${c.caseId}|${cond}`];
           return `${k}: ${ann?.root || "fail"}`;
         })
@@ -407,8 +451,13 @@ function main() {
   }
 
   fs.mkdirSync(OUT, { recursive: true });
+  // Drop stale per-arm language files from earlier publish shape.
+  for (const stale of ["english_a", "english_b", "arabic_a", "arabic_b"]) {
+    const p = path.join(OUT, `${stale}.json`);
+    if (fs.existsSync(p)) fs.unlinkSync(p);
+  }
 
-  const langs = CONDITIONS.map((meta) => buildLang(meta, caseOutcomes));
+  const langs = LANGUAGES.map((meta) => buildLang(meta, caseOutcomes));
   const fails = [];
   for (const lang of langs) {
     for (const row of lang.rows) {
@@ -453,65 +502,28 @@ function main() {
   const report = {
     title: "VANTA University · EDU Moodle suite",
     blurb:
-      "19 EDU rules × EN/AR (A/B arms). Localized rulebook preamble; independent REST/DB verify. No agent coaching.",
-    audience: "Reviewers of case fixtures, verifiers, and cross-language parity",
-    layers: [
-      {
-        level: "1",
-        title: "Policy",
-        body: "Rulebook locales (EN/AR) injected as session_instructions — not buried in task prompts.",
-      },
-      {
-        level: "2",
-        title: "Seed",
-        body: "Each case seeds Moodle state (Labels, enrolments, grades, registers) for A vs B policy forks.",
-      },
-      {
-        level: "3",
-        title: "Agent",
-        body: "openai_direct / gpt-6-luna operates the site; task text stays language-local and coaching-free.",
-      },
-      {
-        level: "4",
-        title: "Verify",
-        body: "Independent verify() via Moodle REST + Postgres (overrides, messages, grade_grades). Honest PASS/FAIL.",
-      },
-    ],
+      "19 EDU rules in English and Arabic. Rulebook preamble + independent REST/DB verify. A/B are policy forks, not languages.",
+    audience:
+      "Reviewers of case fixtures, verifiers, and cross-language parity",
+    layers: [],
     flows: [
       {
         id: "high",
         title: "Experiment loop",
         mermaid: `flowchart LR
   RB[Rulebook EN/AR] --> SI[session_instructions]
-  SEED[Case seed A/B] --> PROMPT[Localized task prompt]
+  SEED[Case seed] --> PROMPT[Localized task]
   SI --> AGENT[openai_direct]
   PROMPT --> AGENT
   AGENT --> V[Independent verify]
-  V --> OUT{PASS / FAIL}
-  OUT -->|system fixed| RERUN[Rerun changed cases]
-  OUT -->|agent incomplete| KEEP[Keep FAIL]`,
-      },
-      {
-        id: "arms",
-        title: "Language × condition arms",
-        mermaid: `flowchart TB
-  CASE[vu_edu_* case] --> EN[English]
-  CASE --> AR[Arabic]
-  EN --> ENA[A policy path]
-  EN --> ENB[B policy path]
-  AR --> ARA[A policy path]
-  AR --> ARB[B policy path]
-  ENA --> REC[Latest result JSON]
-  ENB --> REC
-  ARA --> REC
-  ARB --> REC`,
+  V --> OUT{PASS / FAIL}`,
       },
     ],
     resultsHeadline: [
-      `${honestPass}/${totalCases} arms PASS (${passRate}%)`,
-      `${passCases}/${catalog.length} cases clean across all run arms`,
-      `${agentFails} agent fails · ${systemFails} system fails (post-fix)`,
-      "Parity: EN and AR fail the same policy arms except SE2.1 EN A and PR2.1 EN B",
+      `${honestPass}/${totalCases} runs PASS (${passRate}%) · EN + AR`,
+      `${passCases}/${catalog.length} cases clean across all runs`,
+      `${agentFails} agent fails · ${systemFails} system fails`,
+      "Parity: same fails in both langs except SE2.1 EN A and PR2.1 EN B",
     ],
     caseCatalog: catalog,
   };
@@ -519,7 +531,7 @@ function main() {
   const index = {
     slug: SLUG,
     title: "VANTA University EDU",
-    subtitle: "19 rules · EN+AR A/B · gpt-6-luna · honest verify",
+    subtitle: "19 rules · EN+AR · gpt-6-luna · honest verify",
     experiment: "vanta-university",
     harness: "openai_direct + vanta_university rulebook",
     updatedAt: new Date().toISOString(),
