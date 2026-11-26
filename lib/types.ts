@@ -14,6 +14,15 @@ export type CaseRow = {
   shouldFixSystem?: string;
   proposedFix?: string;
   backend?: string;
+  /** Base case id without arm suffix (e.g. vu_edu_pr1_1_…). */
+  baseCaseId?: string;
+  rule?: string;
+  arm?: string;
+  setup?: string;
+  how?: string;
+  prompt?: string;
+  model?: string;
+  lang?: string;
 };
 
 export type LanguageSummary = {

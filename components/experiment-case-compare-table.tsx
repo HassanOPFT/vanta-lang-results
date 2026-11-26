@@ -68,15 +68,9 @@ export function ExperimentCaseCompareTable({ languages }: Props) {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">
-            Case metrics
-          </h2>
-          <p className="text-sm text-muted">
-            Case cell spans languages; metric columns stay aligned for
-            comparison.
-          </p>
-        </div>
+        <p className="text-sm text-muted">
+          Case cell spans languages; metric columns stay aligned.
+        </p>
         <div className="flex flex-wrap gap-1">
           {languages.map((lang) => {
             const on = selected.includes(lang.condition);
