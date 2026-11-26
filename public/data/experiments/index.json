@@ -1,5 +1,17 @@
 [
   {
+    "slug": "vanta-university",
+    "title": "VANTA University EDU",
+    "subtitle": "19 rules · EN+AR A/B · gpt-6-luna · honest verify",
+    "updatedAt": "2026-11-26T21:30:36.538Z",
+    "languageCount": 4,
+    "passRate": 91.9,
+    "honestPass": 68,
+    "honestFail": 6,
+    "systemFails": 0,
+    "agentFails": 6
+  },
+  {
     "slug": "moodle-ws-api",
     "title": "Moodle WS API track",
     "subtitle": "EN+AR · stock wsfunctions · no browser",

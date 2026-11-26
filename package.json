@@ -6,8 +6,9 @@
 	"scripts": {
 		"publish-data": "node scripts/publish-data.mjs",
 		"publish-moodle-ws-api": "node scripts/publish-moodle-ws-api.mjs",
-		"predev": "node scripts/publish-data.mjs && node scripts/publish-moodle-ws-api.mjs",
-		"prebuild": "node scripts/publish-data.mjs && node scripts/publish-moodle-ws-api.mjs",
+		"publish-vanta-university": "node scripts/publish-vanta-university.mjs",
+		"predev": "node scripts/publish-data.mjs && node scripts/publish-moodle-ws-api.mjs && node scripts/publish-vanta-university.mjs",
+		"prebuild": "node scripts/publish-data.mjs && node scripts/publish-moodle-ws-api.mjs && node scripts/publish-vanta-university.mjs",
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",

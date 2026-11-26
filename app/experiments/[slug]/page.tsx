@@ -417,7 +417,12 @@ export default function ExperimentDetailPage() {
       </CollapsibleSection>
 
       {!loadingDetails && details.length > 0 ? (
-        <ExperimentCaseCompareTable languages={details} />
+        <CollapsibleSection
+          title="Full case metrics"
+          description="Per-arm turns, wall clock, and tokens — expand to compare."
+        >
+          <ExperimentCaseCompareTable languages={details} />
+        </CollapsibleSection>
       ) : null}
     </div>
   );

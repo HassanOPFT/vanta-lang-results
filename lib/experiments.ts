@@ -57,6 +57,18 @@ export type ExperimentReportFlow = {
   mermaid: string;
 };
 
+export type ExperimentCaseCatalogRow = {
+  rule: string;
+  caseId: string;
+  setup: string;
+  how: string;
+  enA: string;
+  enB: string;
+  arA: string;
+  arB: string;
+  tldr: string;
+};
+
 export type ExperimentReport = {
   title: string;
   blurb: string;
@@ -64,6 +76,7 @@ export type ExperimentReport = {
   layers: ExperimentReportLayer[];
   flows: ExperimentReportFlow[];
   resultsHeadline?: string[];
+  caseCatalog?: ExperimentCaseCatalogRow[];
   toolCount?: {
     total: number;
     session: number;
