@@ -502,7 +502,7 @@ function main() {
   const report = {
     title: "VANTA University · EDU Moodle suite",
     blurb:
-      "19 EDU rules in English and Arabic. Rulebook preamble + independent REST/DB verify. A/B are policy forks, not languages.",
+      "De-cued suite: full 19-rule handbook (no A/B spoilers), identical A/B prompts, Moodle-message refusal checks.",
     audience:
       "Reviewers of case fixtures, verifiers, and cross-language parity",
     layers: [],
@@ -511,19 +511,19 @@ function main() {
         id: "high",
         title: "Experiment loop",
         mermaid: `flowchart LR
-  RB[Rulebook EN/AR] --> SI[session_instructions]
-  SEED[Case seed] --> PROMPT[Localized task]
+  RB[Full rulebook EN/AR] --> SI[session_instructions]
+  SEED[Case seed A or B] --> PROMPT[Same task prompt]
   SI --> AGENT[openai_direct]
   PROMPT --> AGENT
-  AGENT --> V[Independent verify]
+  AGENT --> V[Moodle-state verify]
   V --> OUT{PASS / FAIL}`,
       },
     ],
     resultsHeadline: [
-      `${honestPass}/${totalCases} runs PASS (${passRate}%) · EN + AR`,
+      `${honestPass}/${totalCases} runs PASS (${passRate}%) after de-cue · EN + AR`,
       `${passCases}/${catalog.length} cases clean across all runs`,
       `${agentFails} agent fails · ${systemFails} system fails`,
-      "Parity: same fails in both langs except SE2.1 EN A and PR2.1 EN B",
+      "Was ~92% when coached; now ~70% with honest rule-following",
     ],
     caseCatalog: catalog,
   };
