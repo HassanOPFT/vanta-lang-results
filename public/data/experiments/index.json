@@ -3,13 +3,13 @@
     "slug": "vanta-university",
     "title": "VANTA University EDU",
     "subtitle": "19 rules · EN+AR · gpt-6-luna · honest verify",
-    "updatedAt": "2026-11-26T21:52:02.014Z",
+    "updatedAt": "2026-11-27T14:51:15.874Z",
     "languageCount": 2,
-    "passRate": 91.9,
-    "honestPass": 68,
-    "honestFail": 6,
+    "passRate": 70.3,
+    "honestPass": 52,
+    "honestFail": 22,
     "systemFails": 0,
-    "agentFails": 6
+    "agentFails": 22
   },
   {
     "slug": "moodle-ws-api",
